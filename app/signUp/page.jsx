@@ -148,7 +148,7 @@ export default function SignUpPage() {
             <FieldDescription className="text-center">
   Don't have an account?{" "}
   <Link
-    href="/signUp"
+    href="/login"
     className="font-medium underline underline-offset-4"
   >
    Log In
