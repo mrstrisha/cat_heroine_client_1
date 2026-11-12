@@ -3,6 +3,7 @@
 
 import { authClient } from '@/lib/auth-client'
 import React from 'react'
+import { useTheme } from "next-themes"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
@@ -22,6 +23,12 @@ const Navbar = () => {
   const { data: session } = authClient.useSession();
 
   const user = session?.user;
+
+  const { theme, setTheme } = useTheme();
+
+const toggleTheme = () => {
+  setTheme(theme === "dark" ? "light" : "dark");
+};
 
   const handleSignout = () => {
     authClient.signOut();
@@ -64,6 +71,13 @@ const Navbar = () => {
         {/* Login / Profile */}
 
         <div className="flex items-center gap-3">
+<Button
+  onClick={toggleTheme}
+  variant="outline"
+  className="rounded-full border-[#98A77C] text-lg"
+>
+  {theme === "dark" ? "☀️" : "🌙"}
+</Button>
 
           {
             user ?
