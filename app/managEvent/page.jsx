@@ -1,6 +1,6 @@
+
 import Image from "next/image";
 import Link from "next/link";
-
 
 const ManagEvent = async () => {
   const res = await fetch("http://localhost:8000/manageEvent", {
@@ -10,19 +10,19 @@ const ManagEvent = async () => {
   const data = await res.json();
 
   return (
-    <div className="min-h-screen  px-6 py-12 md:px-10">
+    <div className="min-h-screen bg-[#F7F9F4] dark:bg-zinc-950 px-6 py-12 md:px-10 transition-colors duration-300">
 
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-semibold uppercase tracking-[4px] text-[#88976C]">
+        <p className="text-sm font-semibold uppercase tracking-[4px] text-[#88976C] dark:text-[#B6C99B]">
           Community Impact
         </p>
 
-        <h1 className="mt-2 text-3xl font-bold text-[#728156] md:text-4xl">
+        <h1 className="mt-2 text-3xl font-bold text-[#728156] dark:text-white md:text-4xl">
           Manage Events
         </h1>
 
-        <p className="mt-2 text-[#88976C]">
+        <p className="mt-2 text-[#88976C] dark:text-gray-400">
           Explore and manage all your community events.
         </p>
       </div>
@@ -81,13 +81,14 @@ const ManagEvent = async () => {
                 <div className="flex items-center justify-between border-t border-white/30 pt-4">
 
                   <span className="text-xs font-medium tracking-wider text-white/80">
-                    EVENT Detail 
+                    EVENT Detail
                   </span>
-                    
+
                   <Link
-                   href={`/eventDatail/${event._id}`}
-                   className=" flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#728156] transition-all duration-300 group-hover:bg-[#B6C99B]">
-                    <span className="text-2xl"> → </span>
+                    href={`/eventDatail/${event._id}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#728156] transition-all duration-300 group-hover:bg-[#B6C99B]"
+                  >
+                    <span className="text-2xl">→</span>
                   </Link>
 
                 </div>
@@ -102,11 +103,11 @@ const ManagEvent = async () => {
       {/* Empty State */}
       {data.length === 0 && (
         <div className="py-20 text-center">
-          <h2 className="text-2xl font-bold text-[#728156]">
+          <h2 className="text-2xl font-bold text-[#728156] dark:text-white">
             No Events Found
           </h2>
 
-          <p className="mt-2 text-[#88976C]">
+          <p className="mt-2 text-[#88976C] dark:text-gray-400">
             There are no events available right now.
           </p>
         </div>
