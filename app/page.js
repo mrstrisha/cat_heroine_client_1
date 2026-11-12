@@ -4,7 +4,6 @@ import HeroSection from "./component/HeroSection";
 import Footer from "./component/Footer";
 
 const Home = async () => {
-
   let events = [];
 
   try {
@@ -20,7 +19,7 @@ const Home = async () => {
   }
 
   return (
-    <main className="bg-white">
+    <main className="bg-white dark:bg-zinc-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
       {/* Hero Section */}
       <HeroSection />
@@ -33,11 +32,11 @@ const Home = async () => {
             What We Do
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] mt-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] dark:text-white mt-3">
             Making Community Service Easier
           </h2>
 
-          <p className="text-gray-500 mt-4 leading-7">
+          <p className="text-gray-500 dark:text-gray-400 mt-4 leading-7">
             Connect with people, discover meaningful activities
             and take part in creating positive changes.
           </p>
@@ -65,17 +64,17 @@ const Home = async () => {
 
             <div
               key={index}
-              className="bg-[#F8FAF5] border border-[#E1EBD6] rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition duration-300"
+              className="bg-[#F8FAF5] dark:bg-zinc-900 border border-[#E1EBD6] dark:border-zinc-800 rounded-3xl p-8 hover:shadow-xl hover:-translate-y-2 transition duration-300"
             >
-              <div className="w-16 h-16 rounded-2xl bg-[#E7F5DC] flex items-center justify-center text-3xl">
+              <div className="w-16 h-16 rounded-2xl bg-[#E7F5DC] dark:bg-zinc-800 flex items-center justify-center text-3xl">
                 {feature.icon}
               </div>
 
-              <h3 className="text-xl font-bold text-[#35452B] mt-6">
+              <h3 className="text-xl font-bold text-[#35452B] dark:text-white mt-6">
                 {feature.title}
               </h3>
 
-              <p className="text-gray-500 leading-7 mt-3">
+              <p className="text-gray-500 dark:text-gray-400 leading-7 mt-3">
                 {feature.description}
               </p>
             </div>
@@ -85,9 +84,8 @@ const Home = async () => {
         </div>
       </section>
 
-
       {/* Recent Upcoming Events */}
-      <section className="bg-[#F6F9F1] py-20 px-6 md:px-10">
+      <section className="bg-[#F6F9F1] dark:bg-zinc-900 py-20 px-6 md:px-10">
 
         <div className="max-w-7xl mx-auto">
 
@@ -98,33 +96,32 @@ const Home = async () => {
                 Be Part of Something Good
               </p>
 
-              <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] mt-3">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] dark:text-white mt-3">
                 Recent Upcoming Events
               </h2>
 
-              <p className="text-gray-500 mt-3">
+              <p className="text-gray-500 dark:text-gray-400 mt-3">
                 Find your next opportunity to make an impact.
               </p>
             </div>
 
             <Link
               href="/upcomingEvents"
-              className="text-[#728156] font-bold hover:underline"
+              className="text-[#728156] dark:text-[#B6C99B] font-bold hover:underline"
             >
               View All Events →
             </Link>
 
           </div>
 
-
           {events.length === 0 ? (
 
-            <div className="text-center py-16 bg-white rounded-3xl">
+            <div className="text-center py-16 bg-white dark:bg-zinc-950 rounded-3xl border border-gray-100 dark:border-zinc-800">
               <p className="text-5xl">🌱</p>
-              <h3 className="text-xl font-bold text-[#35452B] mt-4">
+              <h3 className="text-xl font-bold text-[#35452B] dark:text-white mt-4">
                 No Upcoming Events Yet
               </h3>
-              <p className="text-gray-500 mt-2">
+              <p className="text-gray-500 dark:text-gray-400 mt-2">
                 New community events will appear here.
               </p>
             </div>
@@ -137,7 +134,7 @@ const Home = async () => {
 
                 <div
                   key={event._id}
-                  className="bg-white rounded-3xl overflow-hidden border border-[#E1EBD6] shadow-sm hover:shadow-xl transition duration-300 group"
+                  className="bg-white dark:bg-zinc-950 rounded-3xl overflow-hidden border border-[#E1EBD6] dark:border-zinc-800 shadow-sm hover:shadow-xl transition duration-300 group"
                 >
 
                   <div className="relative overflow-hidden">
@@ -154,15 +151,15 @@ const Home = async () => {
 
                   <div className="p-6">
 
-                    <h3 className="text-xl font-bold text-[#35452B] line-clamp-1">
+                    <h3 className="text-xl font-bold text-[#35452B] dark:text-white line-clamp-1">
                       {event.title}
                     </h3>
 
-                    <p className="text-gray-500 mt-3">
+                    <p className="text-gray-500 dark:text-gray-400 mt-3">
                       📍 {event.location}
                     </p>
 
-                    <p className="text-gray-500 mt-2">
+                    <p className="text-gray-500 dark:text-gray-400 mt-2">
                       📅 {new Date(event.eventDate).toLocaleDateString("en-GB")}
                     </p>
 
@@ -174,7 +171,6 @@ const Home = async () => {
                     </Link>
 
                   </div>
-
                 </div>
 
               ))}
@@ -186,7 +182,6 @@ const Home = async () => {
         </div>
       </section>
 
-
       {/* Gallery Section */}
       <section className="py-20 px-6 md:px-10 max-w-7xl mx-auto">
 
@@ -195,11 +190,11 @@ const Home = async () => {
             Moments That Matter
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] mt-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] dark:text-white mt-3">
             Together, We Make A Difference
           </h2>
 
-          <p className="text-gray-500 mt-4">
+          <p className="text-gray-500 dark:text-gray-400 mt-4">
             A glimpse of people coming together for a better world.
           </p>
         </div>
@@ -249,21 +244,20 @@ const Home = async () => {
         </div>
       </section>
 
-
       {/* Newsletter Section */}
       <section className="px-6 md:px-10 pb-20">
 
-        <div className="max-w-7xl mx-auto bg-[#E7F5DC] rounded-[32px] px-7 py-16 md:px-16 text-center">
+        <div className="max-w-7xl mx-auto bg-[#E7F5DC] dark:bg-zinc-900 border border-[#CFE1B9] dark:border-zinc-800 rounded-[32px] px-7 py-16 md:px-16 text-center">
 
-          <p className="text-[#728156] font-bold uppercase tracking-widest text-sm">
+          <p className="text-[#728156] dark:text-[#B6C99B] font-bold uppercase tracking-widest text-sm">
             Stay Connected
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] mt-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#35452B] dark:text-white mt-4">
             Be The First To Know
           </h2>
 
-          <p className="text-gray-600 max-w-xl mx-auto mt-4 leading-7">
+          <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto mt-4 leading-7">
             Get updates about upcoming community events,
             volunteering opportunities and inspiring stories.
           </p>
@@ -273,7 +267,7 @@ const Home = async () => {
             <input
               type="email"
               placeholder="Enter your email address"
-              className="flex-1 bg-white border border-[#CFE1B9] rounded-xl px-5 py-4 outline-none focus:ring-2 focus:ring-[#98A77C]"
+              className="flex-1 bg-white dark:bg-zinc-800 dark:text-white dark:placeholder:text-gray-400 border border-[#CFE1B9] dark:border-zinc-700 rounded-xl px-5 py-4 outline-none focus:ring-2 focus:ring-[#98A77C]"
             />
 
             <button
@@ -285,19 +279,20 @@ const Home = async () => {
 
           </div>
 
-          <p className="text-xs text-gray-500 mt-5">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-5">
             Be part of the change. One community at a time.
           </p>
 
         </div>
       </section>
 
-      <Footer></Footer>
+      <Footer />
 
     </main>
   );
 };
 
 export default Home;
+
 
 
