@@ -6,7 +6,6 @@ import EditPage from "@/app/component/EditPage";
 import DeletePage from "@/app/component/DeletePage";
 
 const ManagEvent = async () => {
-
   let data = [];
 
   try {
@@ -22,25 +21,24 @@ const ManagEvent = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAF5] px-6 py-12 md:px-10">
+    <div className="min-h-screen bg-[#F8FAF5] dark:bg-zinc-950 px-6 py-12 md:px-10 transition-colors duration-300">
 
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12">
 
-        <p className="text-sm font-semibold uppercase tracking-[4px] text-[#88976C]">
+        <p className="text-sm font-semibold uppercase tracking-[4px] text-[#88976C] dark:text-[#B6C99B]">
           Community Impact
         </p>
 
-        <h1 className="mt-2 text-3xl font-bold text-[#52613C] md:text-4xl">
+        <h1 className="mt-2 text-3xl font-bold text-[#52613C] dark:text-white md:text-4xl">
           Manage Events
         </h1>
 
-        <p className="mt-3 text-gray-500">
+        <p className="mt-3 text-gray-500 dark:text-gray-400">
           Explore, edit and manage your community events.
         </p>
 
       </div>
-
 
       {/* Event Cards */}
       <div className="max-w-7xl mx-auto">
@@ -53,7 +51,7 @@ const ManagEvent = async () => {
 
               <div
                 key={event._id}
-                className="group overflow-hidden rounded-3xl bg-white border border-[#E1EBD6] shadow-sm hover:shadow-xl transition-all duration-300"
+                className="group overflow-hidden rounded-3xl bg-white dark:bg-zinc-900 border border-[#E1EBD6] dark:border-zinc-800 shadow-sm hover:shadow-xl transition-all duration-300"
               >
 
                 {/* Event Image */}
@@ -67,25 +65,24 @@ const ManagEvent = async () => {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
 
-                  <span className="absolute top-4 left-4 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-[#728156] shadow">
+                  <span className="absolute top-4 left-4 rounded-full bg-white/95 dark:bg-zinc-900/95 px-4 py-2 text-xs font-bold text-[#728156] dark:text-[#B6C99B] shadow">
                     {event.eventType}
                   </span>
 
                 </div>
 
-
                 {/* Card Content */}
                 <div className="p-6">
 
-                  <h2 className="text-xl font-bold text-[#35452B] line-clamp-1">
+                  <h2 className="text-xl font-bold text-[#35452B] dark:text-white line-clamp-1">
                     {event.title}
                   </h2>
 
-                  <p className="mt-3 text-sm text-gray-500 line-clamp-2 leading-6">
+                  <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-6">
                     {event.description}
                   </p>
 
-                  <div className="mt-5 space-y-3 text-sm text-gray-600">
+                  <div className="mt-5 space-y-3 text-sm text-gray-600 dark:text-gray-400">
 
                     <p>
                       📍 {event.location}
@@ -97,9 +94,8 @@ const ManagEvent = async () => {
 
                   </div>
 
-
                   {/* Action Buttons */}
-                  <div className="grid grid-cols-3 gap-2 mt-7 pt-5 border-t border-gray-100">
+                  <div className="grid grid-cols-3 gap-2 mt-7 pt-5 border-t border-gray-100 dark:border-zinc-700">
 
                     {/* View Button */}
                     <Link
@@ -110,16 +106,18 @@ const ManagEvent = async () => {
                       <span>↗</span>
                     </Link>
 
-
                     {/* Edit Button */}
-                    <div className="flex items-center justify-center rounded-xl border border-[#B6C99B] bg-[#F8FAF5] hover:bg-[#E7F5DC] transition overflow-hidden [&_button]:!w-full [&_button]:!h-full [&_button]:!min-h-[44px] [&_button]:!rounded-xl [&_button]:!border-0 [&_button]:!bg-transparent [&_button]:!text-[#52613C] [&_button]:!text-sm [&_button]:!font-semibold [&_button]:!shadow-none">
+                    <div className="flex items-center justify-center rounded-xl border border-[#B6C99B] dark:border-[#728156] bg-[#F8FAF5] dark:bg-zinc-800 hover:bg-[#E7F5DC] dark:hover:bg-zinc-700 transition overflow-hidden [&_button]:!w-full [&_button]:!h-full [&_button]:!min-h-[44px] [&_button]:!rounded-xl [&_button]:!border-0 [&_button]:!bg-transparent [&_button]:!text-[#52613C] [&_button]:dark:!text-[#B6C99B] [&_button]:!text-sm [&_button]:!font-semibold [&_button]:!shadow-none">
+
                       <EditPage event={event} />
+
                     </div>
 
-
                     {/* Delete Button */}
-                    <div className="flex items-center justify-center rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 transition overflow-hidden [&_button]:!w-full [&_button]:!h-full [&_button]:!min-h-[44px] [&_button]:!rounded-xl [&_button]:!border-0 [&_button]:!bg-transparent [&_button]:!text-red-600 [&_button]:!text-sm [&_button]:!font-semibold [&_button]:!shadow-none">
+                    <div className="flex items-center justify-center rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-950/70 transition overflow-hidden [&_button]:!w-full [&_button]:!h-full [&_button]:!min-h-[44px] [&_button]:!rounded-xl [&_button]:!border-0 [&_button]:!bg-transparent [&_button]:!text-red-600 [&_button]:dark:!text-red-400 [&_button]:!text-sm [&_button]:!font-semibold [&_button]:!shadow-none">
+
                       <DeletePage id={event._id} />
+
                     </div>
 
                   </div>
@@ -135,15 +133,15 @@ const ManagEvent = async () => {
         ) : (
 
           /* Empty State */
-          <div className="rounded-3xl bg-white border border-[#E1EBD6] py-20 text-center">
+          <div className="rounded-3xl bg-white dark:bg-zinc-900 border border-[#E1EBD6] dark:border-zinc-800 py-20 text-center">
 
             <div className="text-5xl mb-5">🌱</div>
 
-            <h2 className="text-2xl font-bold text-[#52613C]">
+            <h2 className="text-2xl font-bold text-[#52613C] dark:text-white">
               No Events Found
             </h2>
 
-            <p className="mt-3 text-gray-500">
+            <p className="mt-3 text-gray-500 dark:text-gray-400">
               You haven't created any community events yet.
             </p>
 
