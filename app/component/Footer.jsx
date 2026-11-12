@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#263321] text-white">
+    <footer className="bg-[#263321] dark:bg-black text-white transition-colors duration-300">
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 pt-16 pb-10">
 
@@ -28,23 +28,34 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-3 mt-6">
-              <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition"
+              >
                 f
               </a>
 
-              <a href="https://www.instagram.com/" target="_blank" rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition">
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition"
+              >
                 ◎
               </a>
 
-              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition">
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#728156] flex items-center justify-center transition"
+              >
                 in
               </a>
             </div>
           </div>
-
 
           {/* Quick Links */}
           <div>
@@ -61,7 +72,6 @@ const Footer = () => {
             </ul>
           </div>
 
-
           {/* Our Mission */}
           <div>
             <h3 className="text-lg font-bold mb-6 text-[#CFE1B9]">
@@ -76,7 +86,6 @@ const Footer = () => {
               <li>🙌 Volunteer Together</li>
             </ul>
           </div>
-
 
           {/* Contact */}
           <div>
@@ -93,7 +102,10 @@ const Footer = () => {
 
               <div className="flex gap-3">
                 <span>✉️</span>
-                <a href="mailto:hello@carheroine.com" className="hover:text-[#B6C99B]">
+                <a
+                  href="mailto:hello@carheroine.com"
+                  className="hover:text-[#B6C99B]"
+                >
                   hello@carheroine.com
                 </a>
               </div>
@@ -115,7 +127,6 @@ const Footer = () => {
 
         </div>
 
-
         {/* Bottom */}
         <div className="border-t border-white/15 mt-14 pt-7 flex flex-col md:flex-row justify-between items-center gap-4">
 
@@ -135,3 +146,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
