@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const Navbar = () => {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
+const { data: session } = authClient.useSession();
+const user = session?.user;
 
   const { theme, setTheme } = useTheme();
 

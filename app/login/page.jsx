@@ -44,10 +44,12 @@ export default function LogInPage() {
       return;
     }
 
-    if (data) {
-      toast.success("Login Successful!");
-      router.push("/upcomingEvents");
-    }
+   if (data) {
+  await authClient.getSession();
+  toast.success("Login Successful!");
+  router.refresh();
+  router.push("/upcomingEvents");
+}
   };
 
   // Google Login

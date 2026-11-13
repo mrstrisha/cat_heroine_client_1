@@ -56,10 +56,12 @@ export default function SignUpPage() {
       return;
     }
 
-    if (data) {
-      toast.success("Registration Successful!");
-      router.push("/upcomingEvents");
-    }
+   if (data) {
+  await authClient.getSession();
+  toast.success("Registration Successful!");
+  router.refresh();
+  router.push("/upcomingEvents");
+}
   };
 
   // Google Sign Up
