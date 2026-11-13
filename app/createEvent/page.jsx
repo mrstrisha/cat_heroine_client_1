@@ -1,9 +1,11 @@
 
+
 "use client";
 
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import {
   Calendar,
   MapPin,
@@ -35,17 +37,6 @@ export default function CreateEventPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  // const [userEmail, setUserEmail] = useState("");
-
-
-  // useState(() => {
-  //   if (typeof window !== "undefined") {
-  //     setUserEmail(
-  //       localStorage.getItem("userEmail") || ""
-  //     );
-  //   }
-  // });
-
 
   const today = new Date();
 
@@ -59,11 +50,6 @@ export default function CreateEventPage() {
 
     if (loading) return;
 
-    // if (!userEmail) {
-    //   toast.error("Please login first!");
-    //   return;
-    // }
-
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
@@ -75,26 +61,35 @@ export default function CreateEventPage() {
       return;
     }
 
-    // Add creator information
-    // data.creatorEmail = userEmail;
     data.createdAt = new Date().toISOString();
 
     try {
       setLoading(true);
 
-      const res = await fetch(
-        "http://localhost:8000/CreateEvents",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      // Get JWT Token
+      const tokenResponse = await authClient.token();
+
+      const token = tokenResponse.data?.token;
+
+      if (tokenResponse.error || !token) {
+        toast.error("Please login first!");
+        return;
+      }
+
+      // Send request with JWT Token
+      const res = await fetch("http://localhost:8000/CreateEvents", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
 
       if (!res.ok) {
-        throw new Error("Failed to create event");
+        throw new Error(result.message || "Failed to create event");
       }
 
       toast.success("Event created successfully!");
@@ -108,7 +103,7 @@ export default function CreateEventPage() {
 
     } catch (err) {
       console.error(err);
-      toast.error("Event creation failed!");
+      toast.error(err.message || "Event creation failed!");
 
     } finally {
       setLoading(false);
@@ -247,20 +242,6 @@ export default function CreateEventPage() {
               className="input-style"
             />
           </Field>
-
-          {/* Creator Email */}
-          {/* <div
-            className="rounded-xl px-4 py-3 text-sm"
-            style={{
-              backgroundColor: theme.light,
-              color: theme.darkest,
-            }}
-          >
-            <span className="font-semibold">
-              Creating as:
-            </span>{" "}
-            {userEmail || "Please login first"}
-          </div> */}
 
           {/* Submit Button */}
           <button

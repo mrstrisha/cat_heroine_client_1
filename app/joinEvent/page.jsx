@@ -22,8 +22,22 @@ const JoinedEvents = () => {
     setLoading(true)
 
     try {
+      // Get JWT Token
+      const tokenResponse = await authClient.token()
+      const token = tokenResponse.data?.token
+
+      if (tokenResponse.error || !token) {
+        throw new Error("Please login first!")
+      }
+
+      // Send request with JWT Token
       const res = await fetch(
-        `http://localhost:8000/joinedEvents/${encodeURIComponent(user.email)}`
+        `http://localhost:8000/joinedEvents/${encodeURIComponent(user.email)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
 
       const data = await res.json()
@@ -31,8 +45,9 @@ const JoinedEvents = () => {
       if (res.ok) {
         setEvents(data)
       } else {
-        console.log(data.message)
+        throw new Error(data.message || "Failed to load events")
       }
+
     } catch (error) {
       console.log('Failed to load joined events:', error)
     } finally {
@@ -167,3 +182,4 @@ const JoinedEvents = () => {
 }
 
 export default JoinedEvents
+

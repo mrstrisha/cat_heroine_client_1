@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "@teispace/next-themes";
 
 export default function ThemeProvider({ children }) {
   return (

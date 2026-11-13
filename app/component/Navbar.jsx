@@ -3,7 +3,7 @@
 
 import { authClient } from '@/lib/auth-client'
 import React from 'react'
-import { useTheme } from "next-themes"
+import { useTheme } from "@teispace/next-themes";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
