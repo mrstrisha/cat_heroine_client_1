@@ -239,7 +239,7 @@ const EventDetailPage = async ({ params }) => {
 
   {/* Join Button */}
 <div className="mt-5 [&_button]:!w-full [&_button]:!h-14 [&_button]:!rounded-xl [&_button]:!bg-[#728156] [&_button]:hover:!bg-[#5F6E48] [&_button]:!text-white [&_button]:!text-base [&_button]:!font-bold [&_button]:!shadow-md">
-<Link href={`/joinedEvent?eventId=${id}`}>
+<Link href={`/joinEvent?eventId=${id}`}>
     <Button>
      Join Event
     </Button>
