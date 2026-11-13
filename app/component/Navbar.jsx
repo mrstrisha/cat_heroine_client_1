@@ -44,7 +44,7 @@ const Navbar = () => {
           </div>
 
           <h1 className="text-2xl font-bold text-[#728156] dark:text-[#CFE1B9]">
-            Car Heroine
+           EcoSphere
           </h1>
         </Link>
 
