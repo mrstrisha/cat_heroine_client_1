@@ -11,38 +11,16 @@ import {
   Image as ImageIcon,
   AlignLeft,
   Tag,
-  Moon,
-  Sun,
 } from "lucide-react";
 
-// Light Theme
-const lightTheme = {
+// Theme palette
+const theme = {
   light: "#E7F5DC",
   soft: "#CFE1B9",
   mid: "#B6C99B",
   accent: "#98A77C",
   dark: "#88976C",
   darkest: "#728156",
-  background: "linear-gradient(135deg, #E7F5DC 0%, #CFE1B9 45%, #B6C99B 100%)",
-  card: "rgba(255,255,255,0.88)",
-  text: "#728156",
-  input: "#ffffff",
-  inputText: "#2c3324",
-};
-
-// Dark Theme
-const darkTheme = {
-  light: "#111827",
-  soft: "#1F2937",
-  mid: "#374151",
-  accent: "#A3B18A",
-  dark: "#A3B18A",
-  darkest: "#D9E5C8",
-  background: "linear-gradient(135deg, #111827 0%, #17212F 50%, #26352C 100%)",
-  card: "rgba(31,41,55,0.95)",
-  text: "#E5E7EB",
-  input: "#111827",
-  inputText: "#F9FAFB",
 };
 
 const EVENT_TYPES = [
@@ -58,9 +36,6 @@ export default function CreateEventPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-
-  const theme = isDark ? darkTheme : lightTheme;
 
   const today = new Date();
 
@@ -68,7 +43,7 @@ export default function CreateEventPage() {
     today.getMonth() + 1
   ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
-  // Form Submit
+  // Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,7 +52,7 @@ export default function CreateEventPage() {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    // Future Date Validation
+    // Future date validation
     const selectedDate = data.eventDate;
 
     if (selectedDate <= minDate) {
@@ -99,7 +74,7 @@ export default function CreateEventPage() {
         return;
       }
 
-      // Send Request
+      // Send request with JWT Token
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/CreateEvents`,
         {
@@ -122,6 +97,7 @@ export default function CreateEventPage() {
 
       e.target.reset();
 
+      // Redirect to Upcoming Events
       setTimeout(() => {
         router.push("/upcomingEvents");
       }, 1500);
@@ -136,61 +112,22 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 py-10 transition-colors duration-500"
-      style={{
-        background: theme.background,
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center bg-[#F7F9F4] dark:bg-zinc-950 px-4 py-10 transition-colors duration-300">
+
       {/* Main Card */}
-      <div
-        className="w-full max-w-2xl rounded-3xl shadow-2xl p-6 md:p-10 border transition-all duration-500"
-        style={{
-          backgroundColor: theme.card,
-          backdropFilter: "blur(10px)",
-          borderColor: theme.mid,
-        }}
-      >
-        {/* Dark Mode Toggle */}
-        <div className="flex justify-end mb-5">
-          <button
-            type="button"
-            onClick={() => setIsDark(!isDark)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
-            style={{
-              backgroundColor: theme.soft,
-              color: theme.darkest,
-              border: `1px solid ${theme.mid}`,
-            }}
-          >
-            {isDark ? <Sun size={17} /> : <Moon size={17} />}
-            {isDark ? "Light Mode" : "Dark Mode"}
-          </button>
-        </div>
+      <div className="w-full max-w-2xl rounded-3xl shadow-2xl p-8 md:p-10 border border-[#B6C99B] dark:border-zinc-800 bg-white/90 dark:bg-zinc-900 transition-colors duration-300">
 
         {/* Header */}
         <div className="text-center mb-8">
-          <span
-            className="inline-block rounded-full px-4 py-2 text-xs font-semibold mb-4"
-            style={{
-              backgroundColor: theme.soft,
-              color: theme.darkest,
-            }}
-          >
+          <span className="inline-block rounded-full px-4 py-2 text-xs font-semibold mb-4 bg-[#E7F5DC] dark:bg-zinc-800 text-[#728156] dark:text-[#B6C99B]">
             🌿 MAKE A DIFFERENCE
           </span>
 
-          <h1
-            className="text-3xl md:text-4xl font-bold mb-3"
-            style={{ color: theme.darkest }}
-          >
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-[#728156] dark:text-white">
             Create an Event
           </h1>
 
-          <p
-            className="text-sm md:text-base"
-            style={{ color: theme.accent }}
-          >
+          <p className="text-sm md:text-base text-[#88976C] dark:text-gray-400">
             Fill in the details below and inspire your community 🌱
           </p>
         </div>
@@ -199,7 +136,7 @@ export default function CreateEventPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
 
           {/* Title */}
-          <Field label="Event Title" icon={<Tag size={18} />} theme={theme}>
+          <Field label="Event Title" icon={<Tag size={18} />}>
             <input
               type="text"
               name="title"
@@ -213,7 +150,6 @@ export default function CreateEventPage() {
           <Field
             label="Description"
             icon={<AlignLeft size={18} />}
-            theme={theme}
           >
             <textarea
               name="description"
@@ -225,7 +161,7 @@ export default function CreateEventPage() {
           </Field>
 
           {/* Event Type */}
-          <Field label="Event Type" icon={<Tag size={18} />} theme={theme}>
+          <Field label="Event Type" icon={<Tag size={18} />}>
             <select
               name="eventType"
               required
@@ -248,7 +184,6 @@ export default function CreateEventPage() {
           <Field
             label="Thumbnail Image URL"
             icon={<ImageIcon size={18} />}
-            theme={theme}
           >
             <input
               type="url"
@@ -263,7 +198,6 @@ export default function CreateEventPage() {
           <Field
             label="Location"
             icon={<MapPin size={18} />}
-            theme={theme}
           >
             <input
               type="text"
@@ -278,7 +212,6 @@ export default function CreateEventPage() {
           <Field
             label="Event Date"
             icon={<Calendar size={18} />}
-            theme={theme}
           >
             <input
               type="date"
@@ -293,19 +226,14 @@ export default function CreateEventPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed shadow-lg"
-            style={{
-              background: `linear-gradient(135deg, ${theme.accent}, ${theme.darkest})`,
-            }}
+            className="w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed shadow-lg bg-gradient-to-r from-[#98A77C] to-[#728156] dark:from-[#728156] dark:to-[#4B5D38]"
           >
             {loading ? "Creating Event..." : "Create Event →"}
           </button>
+
         </form>
 
-        <p
-          className="text-center text-xs mt-6"
-          style={{ color: theme.accent }}
-        >
+        <p className="text-center text-xs mt-6 text-[#88976C] dark:text-gray-400">
           Small actions, big impact. 🌱
         </p>
       </div>
@@ -317,29 +245,49 @@ export default function CreateEventPage() {
           padding: 0.85rem 1rem;
           border-radius: 0.75rem;
           border: 1px solid ${theme.mid};
-          background-color: ${theme.input};
-          color: ${theme.inputText};
+          background-color: white;
+          color: #2c3324;
           font-size: 0.95rem;
           outline: none;
           transition: all 0.25s ease;
         }
 
+        .dark .input-style {
+          background-color: #18181b;
+          color: #f9fafb;
+          border-color: #3f3f46;
+        }
+
         .input-style:focus {
-          border-color: ${theme.accent};
-          box-shadow: 0 0 0 3px ${theme.mid};
+          border-color: ${theme.darkest};
+          box-shadow: 0 0 0 3px ${theme.soft};
+        }
+
+        .dark .input-style:focus {
+          border-color: #98A77C;
+          box-shadow: 0 0 0 3px rgba(152, 167, 124, 0.15);
         }
 
         .input-style::placeholder {
-          color: ${isDark ? "#9CA3AF" : "#a0aa91"};
+          color: #a0aa91;
+        }
+
+        .dark .input-style::placeholder {
+          color: #9ca3af;
         }
 
         .input-style option {
-          background-color: ${theme.input};
-          color: ${theme.inputText};
+          background-color: white;
+          color: #2c3324;
         }
 
-        .input-style::-webkit-calendar-picker-indicator {
-          filter: ${isDark ? "invert(1)" : "none"};
+        .dark .input-style option {
+          background-color: #18181b;
+          color: #f9fafb;
+        }
+
+        .dark .input-style::-webkit-calendar-picker-indicator {
+          filter: invert(1);
         }
       `}</style>
     </div>
@@ -347,17 +295,13 @@ export default function CreateEventPage() {
 }
 
 // Reusable Field Component
-function Field({ label, icon, children, theme }) {
+function Field({ label, icon, children }) {
   return (
     <div>
-      <label
-        className="flex items-center gap-2 mb-2 text-sm font-semibold"
-        style={{ color: theme.darkest }}
-      >
-        <span style={{ color: theme.accent }}>
+      <label className="flex items-center gap-2 mb-2 text-sm font-semibold text-[#728156] dark:text-[#B6C99B]">
+        <span className="text-[#98A77C] dark:text-[#B6C99B]">
           {icon}
         </span>
-
         {label}
       </label>
 
@@ -365,3 +309,4 @@ function Field({ label, icon, children, theme }) {
     </div>
   );
 }
+
