@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 import {
   Dialog,
@@ -34,22 +35,32 @@ const EditPage = ({ event }) => {
     try {
       setLoading(true);
 
+      // Get JWT token
+      const tokenResponse = await authClient.token();
+      const token = tokenResponse.data?.token;
+
+      if (tokenResponse.error || !token) {
+        alert("Please login first!");
+        return;
+      }
+
       const res = await fetch(
-        `http://localhost:8000/eventDetail/${event._id}`,
+         `${process.env.NEXT_PUBLIC_API_URL}/eventDetail/${event._id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(data),
         }
       );
 
-      if (!res.ok) {
-        throw new Error("Event update failed!");
-      }
-
       const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Event update failed!");
+      }
 
       console.log("Updated Event:", result);
 
@@ -69,32 +80,24 @@ const EditPage = ({ event }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-
-      {/* Open Dialog Button */}
       <DialogTrigger asChild>
         <Button className="rounded-md bg-[#728156] hover:bg-[#5f6e47] text-white">
           Edit Event
         </Button>
       </DialogTrigger>
 
-      {/* Dialog Content */}
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             Edit Event
           </DialogTitle>
         </DialogHeader>
 
-        {/* Edit Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-
-          {/* Event Title */}
           <div>
             <label className="block mb-2 font-medium">
               Event Title
             </label>
-
             <input
               type="text"
               name="title"
@@ -104,12 +107,10 @@ const EditPage = ({ event }) => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block mb-2 font-medium">
               Description
             </label>
-
             <textarea
               name="description"
               defaultValue={event?.description || ""}
@@ -119,14 +120,11 @@ const EditPage = ({ event }) => {
             />
           </div>
 
-          {/* Event Type and Location */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
             <div>
               <label className="block mb-2 font-medium">
                 Event Type
               </label>
-
               <input
                 type="text"
                 name="eventType"
@@ -140,7 +138,6 @@ const EditPage = ({ event }) => {
               <label className="block mb-2 font-medium">
                 Location
               </label>
-
               <input
                 type="text"
                 name="location"
@@ -149,15 +146,12 @@ const EditPage = ({ event }) => {
                 className="w-full border rounded-lg p-3"
               />
             </div>
-
           </div>
 
-          {/* Thumbnail */}
           <div>
             <label className="block mb-2 font-medium">
               Thumbnail URL
             </label>
-
             <input
               type="url"
               name="thumbnail"
@@ -166,12 +160,10 @@ const EditPage = ({ event }) => {
             />
           </div>
 
-          {/* Event Date */}
           <div>
             <label className="block mb-2 font-medium">
               Event Date
             </label>
-
             <input
               type="date"
               name="eventDate"
@@ -187,9 +179,7 @@ const EditPage = ({ event }) => {
             />
           </div>
 
-          {/* Action Buttons */}
           <div className="flex justify-end gap-3 pt-3">
-
             <Button
               type="button"
               variant="outline"
@@ -206,15 +196,11 @@ const EditPage = ({ event }) => {
             >
               {loading ? "Updating..." : "Save Changes"}
             </Button>
-
           </div>
-
         </form>
-
       </DialogContent>
     </Dialog>
   );
 };
 
 export default EditPage;
-

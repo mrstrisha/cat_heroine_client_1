@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 const UpcomingEevents = async () => {
-  const res = await fetch("http://localhost:8000/manageEvent", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ManageEvent`, {
     cache: "no-store",
   });
 

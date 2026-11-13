@@ -32,7 +32,7 @@ const JoinedEvents = () => {
 
       // Send request with JWT Token
       const res = await fetch(
-        `http://localhost:8000/joinedEvents/${encodeURIComponent(user.email)}`,
+  `${process.env.NEXT_PUBLIC_API_URL}/joinedEvents/${encodeURIComponent(user.email)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

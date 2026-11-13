@@ -29,14 +29,25 @@ const JoinEvent = ({ eventId }) => {
 
     try {
 
-      const res = await fetch('http://localhost:8000/joinEvent', {
+      // Get JWT Token
+      const tokenResponse = await authClient.token();
+      const token = tokenResponse.data?.token;
+
+      if (tokenResponse.error || !token) {
+        toast.error('Please login first!');
+        router.push('/login');
+        return;
+      }
+
+      // Send request with JWT Token
+      const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/joinedEvents/${email}', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           eventId: eventId,
-          userEmail: user.email,
         }),
       });
 
@@ -45,10 +56,11 @@ const JoinEvent = ({ eventId }) => {
       if (res.ok) {
         toast.success('Successfully joined the event!');
       } else {
-        toast.error(data.message);
+        toast.error(data.message || 'Failed to join event');
       }
 
     } catch (error) {
+      console.error(error);
       toast.error('Something went wrong!');
     } finally {
       setLoading(false);
@@ -68,3 +80,4 @@ const JoinEvent = ({ eventId }) => {
 }
 
 export default JoinEvent
+

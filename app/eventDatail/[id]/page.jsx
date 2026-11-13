@@ -14,7 +14,7 @@ const EventDetailPage = async ({ params }) => {
 
   try {
     const res = await fetch(
-      `http://localhost:8000/eventDetail/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/eventDetail/${id}`,
       {
         cache: "no-store",
       }
@@ -236,7 +236,6 @@ const EventDetailPage = async ({ params }) => {
     </div>
 
   </div>
-  eventId={id}
 
   {/* Join Button */}
 <div className="mt-5 [&_button]:!w-full [&_button]:!h-14 [&_button]:!rounded-xl [&_button]:!bg-[#728156] [&_button]:hover:!bg-[#5F6E48] [&_button]:!text-white [&_button]:!text-base [&_button]:!font-bold [&_button]:!shadow-md">

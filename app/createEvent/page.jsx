@@ -77,7 +77,7 @@ export default function CreateEventPage() {
       }
 
       // Send request with JWT Token
-      const res = await fetch("http://localhost:8000/CreateEvents", {
+      const res = await fetch(`	${process.env.NEXT_PUBLIC_API_URL}/CreateEvents`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

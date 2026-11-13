@@ -7,7 +7,7 @@ const Home = async () => {
   let events = [];
 
   try {
-    const res = await fetch("http://localhost:8000/recentEvents", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/recentEvents`, {
       cache: "no-store",
     });
 

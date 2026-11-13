@@ -1,11 +1,52 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 
 const ManagEvent = async () => {
-  const res = await fetch("http://localhost:8000/manageEvent", {
-    cache: "no-store",
+  // Get current session
+  const requestHeaders = await headers();
+
+  const session = await auth.api.getSession({
+    headers: requestHeaders,
   });
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  // Get JWT token
+  const tokenResponse = await auth.api.getToken({
+    headers: requestHeaders,
+  });
+
+  const token = tokenResponse?.token;
+
+  if (!token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F7F9F4] dark:bg-zinc-950">
+        <p className="text-red-500">Authentication failed. Please login again.</p>
+      </div>
+    );
+  }
+
+  // Fetch only logged-in user's events
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ManageEvent`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F7F9F4] dark:bg-zinc-950">
+        <p className="text-red-500">Failed to load your events.</p>
+      </div>
+    );
+  }
 
   const data = await res.json();
 
@@ -35,7 +76,6 @@ const ManagEvent = async () => {
             key={event._id}
             className="group relative h-[420px] overflow-hidden rounded-2xl bg-[#728156] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
           >
-
             {/* Background Image */}
             <Image
               src={event.thumbnail}
@@ -69,17 +109,11 @@ const ManagEvent = async () => {
               {/* Bottom Content */}
               <div>
                 <div className="mb-5 space-y-2 text-sm text-white/90">
-                  <p>
-                    📍 {event.location}
-                  </p>
-
-                  <p>
-                    📅 {event.eventDate}
-                  </p>
+                  <p>📍 {event.location}</p>
+                  <p>📅 {event.eventDate}</p>
                 </div>
 
                 <div className="flex items-center justify-between border-t border-white/30 pt-4">
-
                   <span className="text-xs font-medium tracking-wider text-white/80">
                     EVENT Detail
                   </span>
@@ -90,10 +124,8 @@ const ManagEvent = async () => {
                   >
                     <span className="text-2xl">→</span>
                   </Link>
-
                 </div>
               </div>
-              
 
             </div>
           </div>
@@ -109,8 +141,15 @@ const ManagEvent = async () => {
           </h2>
 
           <p className="mt-2 text-[#88976C] dark:text-gray-400">
-            There are no events available right now.
+            You haven't created any events yet.
           </p>
+
+          <Link
+            href="/CreateEvents"
+            className="inline-block mt-5 rounded-lg bg-[#728156] px-6 py-3 text-white hover:bg-[#5f6e47]"
+          >
+            Create Your First Event
+          </Link>
         </div>
       )}
 
